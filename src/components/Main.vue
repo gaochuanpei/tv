@@ -22,6 +22,9 @@ export default {
       //window.location.href = item;
       this.$emit("clickOn");
       let iframe = document.getElementById("ck");
+      iframe.setAttribute("webkitallowfullscreen", "");
+      iframe.setAttribute("mozallowfullscreen", "");
+      iframe.setAttribute("allowfullscreen", "");
       iframe.src = item;
     }
   }
