@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <top />
-    <ul class="btn-group px-4">
+    <ul class="btn-group px-2">
       <li
-        class="btn btn-primary"
+        class="btn btn-primary px-2"
         v-for="(item, index) in items"
         :key="index"
         @click="goPath(item[0])"

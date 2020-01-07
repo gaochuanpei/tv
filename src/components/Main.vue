@@ -3,7 +3,7 @@
     <div id="pic" ref="pic"></div>
     <div id="nav">
       <input
-        class="btn btn-outline-dark"
+        class="btn btn-outline-dark mr-2"
         style = "width:auto;"
         type="button"
         v-for="(item, index) in items"
