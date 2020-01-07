@@ -3,10 +3,12 @@
     <div id="pic" ref="pic"></div>
     <div id="nav">
       <input
+        class="btn btn-outline-dark"
+        style = "width:auto;"
         type="button"
         v-for="(item, index) in items"
         :key="index"
-        :value="'第' + item[1] + '集'"
+        :value="'第' + (item[1]<10?('0'+item[1]):item[1]) + '集'"
         @click="next(item[2])"
       />
     </div>

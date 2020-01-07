@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <top />
-    <ul class="btn-group">
+    <ul class="btn-group px-4">
       <li
         class="btn btn-primary"
         v-for="(item, index) in items"
