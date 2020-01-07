@@ -1,7 +1,17 @@
 <template>
   <div id="app">
     <top />
-    <main-tv :items="items" @clickOn="goOn" />
+    <ul class="btn-group">
+      <li
+        class="btn btn-primary"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="goPath(item[0])"
+      >
+        {{ item[0] }}
+      </li>
+    </ul>
+    <router-view></router-view>
     <total-num :num="num" />
     <div id="pb" v-show="state">加载中...</div>
     <iframe v-show="state" src="" id="ck"></iframe>
@@ -10,34 +20,50 @@
 <script>
 import { getData } from "./network/home";
 import Top from "./components/Top";
-import MainTv from "./components/Main";
 import TotalNum from "./components/TotalNum";
 export default {
   name: "App",
   data() {
     return {
       items: null,
-      state: false,
+      first:true,
       num: 0
     };
   },
+  computed: {
+    state: function() {
+      return this.$store.state.pb;
+    }
+  },
   methods: {
-    goOn: function() {
-      this.state = true;
+    goPath: function(title) {
+      if (this.$route.fullPath !== "/") {
+        this.$router.replace("/");
+      }
+      setTimeout(() => {
+        this.$router.replace("/tv_first/" + title);
+      }, 0);
     }
   },
   created() {
     getData().then(res => {
+      let item_arr = [];
       this.num = res.shift()[0];
-      res.sort(function(a, b) {
-        return b[1] - a[1];
+      res.forEach(function(item) {
+        item_arr.push([item[0][0], item]);
       });
-      this.items = res;
+      this.$store.commit("changeTv", item_arr);
+      this.items = this.$store.state.tv;
     });
+  },
+  updated() {
+    if (this.first) {
+      this.$router.replace("/tv_first/" + "庆余年");
+      this.first = false;
+    }
   },
   components: {
     Top,
-    MainTv,
     TotalNum
   }
 };
@@ -49,7 +75,7 @@ export default {
 }
 #ck,
 #pb {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
